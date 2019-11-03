@@ -11,11 +11,9 @@ export class AppComponent {
   title = 'IneorAngular';
 
 
-  books: any;
+  books: Book[];
 
-  constructor(private _bookService: BookService,)
-  {
-  }
+  constructor(private _bookService: BookService) {}
 
   ngOnInit()
   {
