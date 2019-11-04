@@ -1,0 +1,29 @@
+<div class="col-md-6 user-container">
+    <h2 class="text-center">Add Book</h2>
+    <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <input matInput type="text" formControlName="name" placeholder="Name" name="name" class="form-control" id="name">
+            <mat-error *ngIf="hasError('name', 'required')">Name is required</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field>
+            <input matInput type="text" formControlName="price" placeholder="Price" name="price" class="form-control" id="price">
+            <mat-error *ngIf="hasError('price', 'required')">Price is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput formControlName="author" placeholder="Author" name="author" class="form-control" id="author">
+            <mat-error *ngIf="hasError('author', 'required')">Author is required</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="datePublished">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+	
+        <mat-card-actions align="center">
+            <button mat-raised-button color="primary" [disabled]="!bookForm.valid">Create</button>
+        </mat-card-actions>
+    </form>
+</div>

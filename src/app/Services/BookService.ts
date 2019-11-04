@@ -12,15 +12,37 @@ import { Book } from '../Modules/Book';
   export class BookService {
 
     baseUrl = environment.baseUrl + 'Book/';
-  
+
     constructor(private _HTTP: HttpClient) { }
-  
+
     GetBook(): Observable<Book[]> {
       const headers = new HttpHeaders({ 'Access-Control-Allow-Origin': '*'});
       return this._HTTP.get<Book[]>(this.baseUrl + 'GetBooks', {headers}).pipe(
           catchError(this.handleError)
         );
-      }
+    }
+
+    GetBookById(id: number): Observable<Book> {
+        return this._HTTP.post<Book>(this.baseUrl + 'GetBookById', id);
+    }
+
+    AddBook(data: Book) {
+      return this._HTTP.post(this.baseUrl + 'AddBook', data).pipe(
+        catchError(this.handleError)
+      );
+    }
+
+    EditBook(data: Book) {
+      return this._HTTP.post(this.baseUrl + 'EditBook', data).pipe(
+        catchError(this.handleError)
+      );
+    }
+
+    DeleteBook(id: number) {
+      return this._HTTP.post(this.baseUrl + 'DeleteBook', id).pipe(
+        catchError(this.handleError)
+      );
+    }
 
       handleError(error) {
         let errorMessage = '';
