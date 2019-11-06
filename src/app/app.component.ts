@@ -39,12 +39,10 @@ export class AppComponent {
     });
   }
 
-  editBookDialog(data: Book) {
-    window.localStorage.removeItem('bookId');
-    window.localStorage.setItem('bookId', data.id.toString());
-
+  editBookDialog(book: Book) {
     const dialogRef = this.dialog.open(EditBookComponent, {
-      width: '350px'
+      width: '350px',
+      data: book
     });
 
     dialogRef.afterClosed().subscribe(() => {
@@ -52,17 +50,18 @@ export class AppComponent {
     });
   }
 
-  deleteBookDialog(data: Book) {
-    window.localStorage.removeItem('bookId');
-    window.localStorage.setItem('bookId', data.id.toString());
-
+  deleteBookDialog(book: Book) {
     const dialogRef = this.dialog.open(DeleteBookComponent, {
       width: '350px',
-      data: data.name
+      data: book
     });
 
     dialogRef.afterClosed().subscribe(() => {
       this.GetBooks();
     });
+  }
+
+  public doFilter = (value: string) => {
+    this.books.filter = value.trim().toLocaleLowerCase();
   }
 }

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import { BookService } from 'src/app/Services/BookService';
-import { AppComponent } from 'src/app/app.component';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Book } from 'src/app/Modules/Book';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-book',
@@ -11,12 +12,13 @@ import { MatDialogRef } from '@angular/material';
 })
 export class EditBookComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private bookService: BookService,  public dialogRef: MatDialogRef<EditBookComponent>) { }
+  constructor(private formBuilder: FormBuilder, private bookService: BookService,
+              public dialogRef: MatDialogRef<EditBookComponent>,
+              @Inject(MAT_DIALOG_DATA) public book: Book, private snackBar: MatSnackBar) { }
 
   bookForm: FormGroup;
 
   ngOnInit() {
-    let bookId = window.localStorage.getItem('bookId');
     this.bookForm = this.formBuilder.group({
         id: [''],
         name: ['', Validators.required],
@@ -25,20 +27,26 @@ export class EditBookComponent implements OnInit {
         author: ['', Validators.required]
     });
 
-    this.bookService.GetBookById(Number(bookId))
-      .subscribe( data => {
-        this.bookForm.setValue(data);
-      });
+    this.bookForm.setValue(this.book);
   }
 
   onSubmit() {
     this.bookService.EditBook(this.bookForm.value)
       .subscribe(data => {
+        if (data == true) {
+          this.snackBar.open('Edit was succesful', 'OK', {
+            duration: 2000,
+          });
+        } else {
+          this.snackBar.open('Edit was un-succesful', 'OK', {
+            duration: 2000,
+          });
+        }
         this.dialogRef.close();
       });
   }
 
-  public hasError = (controlName: string, errorName: string) =>{
+  public hasError = (controlName: string, errorName: string) => {
     return this.bookForm.controls[controlName].hasError(errorName);
   }
 }

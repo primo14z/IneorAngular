@@ -10,12 +10,12 @@
         </mat-form-field>
     
         <mat-form-field>
-            <input matInput type="text" formControlName="price" placeholder="Price" name="price" class="form-control" id="price">
+            <input matInput type="number" min="0" formControlName="price" placeholder="Price" name="price" class="form-control" id="price">
             <mat-error *ngIf="hasError('price', 'required')">Price is required</mat-error>
         </mat-form-field>
 
         <mat-form-field>
-            <input matInput formControlName="author" placeholder="Author" name="author" class="form-control" id="author">
+            <input matInput type="text" formControlName="author" placeholder="Author" name="author" class="form-control" id="author">
             <mat-error *ngIf="hasError('author', 'required')">Author is required</mat-error>
         </mat-form-field>
         

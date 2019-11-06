@@ -1,5 +1,16 @@
 <div class="content" role="main">
-    <button mat-button (click)="addBookDialog()" mat-flat-button color="primary">Add Book</button>
+
+  <br />
+  <div fxLayout fxLayoutAlign="left">
+      <button mat-button (click)="addBookDialog()" mat-flat-button color="primary">Add Book</button>
+  </div>
+
+  <div fxLayout fxLayoutAlign="center center">
+    <mat-form-field fxFlex="40%">
+      <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>    
+  
 
   <table mat-table [dataSource]="books"  class="mat-elevation-z8">
     <ng-container matColumnDef="Name">

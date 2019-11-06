@@ -16,6 +16,8 @@ import {
   MatNativeDateModule,
   MatCardModule
 } from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatSnackBarModule} from '@angular/material/snack-bar';
 import { AddBookComponent } from './Dialog-Box/AddBook/add-book.component';
 import { EditBookComponent } from './Dialog-Box/EditBook/edit-book.component';
 import { DeleteBookComponent } from './Dialog-Box/DeleteBook/delete-book.component';
@@ -42,7 +44,9 @@ import { DeleteBookComponent } from './Dialog-Box/DeleteBook/delete-book.compone
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
-    MatCardModule
+    MatCardModule,
+    MatSnackBarModule,
+    FlexLayoutModule
   ],
   entryComponents: [
     AddBookComponent,

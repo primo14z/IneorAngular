@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import { BookService } from 'src/app/Services/BookService';
 import { MatDialogRef } from '@angular/material';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-book',
@@ -10,7 +11,8 @@ import { MatDialogRef } from '@angular/material';
 })
 export class AddBookComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private bookService: BookService, public dialogRef: MatDialogRef<AddBookComponent>) { }
+  constructor(private formBuilder: FormBuilder, private bookService: BookService,
+              public dialogRef: MatDialogRef<AddBookComponent>, private snackBar: MatSnackBar) { }
 
   bookForm: FormGroup;
 
@@ -26,11 +28,20 @@ export class AddBookComponent implements OnInit {
   onSubmit() {
     this.bookService.AddBook(this.bookForm.value)
       .subscribe(data => {
+        if (data == true) {
+          this.snackBar.open('Edit was succesful', 'OK', {
+            duration: 2000,
+          });
+        } else {
+          this.snackBar.open('Edit was un-succesful', 'OK', {
+            duration: 2000,
+          });
+        }
         this.dialogRef.close();
       });
   }
 
-  public hasError = (controlName: string, errorName: string) =>{
+  public hasError = (controlName: string, errorName: string) => {
     return this.bookForm.controls[controlName].hasError(errorName);
   }
 }
