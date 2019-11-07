@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, retry } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Book } from '../Modules/Book';
+import { FilterModel } from '../Modules/FilterModel';
 
 @Injectable({
     providedIn: 'root'
@@ -15,15 +16,22 @@ import { Book } from '../Modules/Book';
 
     constructor(private _HTTP: HttpClient) { }
 
-    GetBook(): Observable<Book[]> {
-      const headers = new HttpHeaders({ 'Access-Control-Allow-Origin': '*'});
-      return this._HTTP.get<Book[]>(this.baseUrl + 'GetBooks', {headers}).pipe(
+    GetBooks(): Observable<Book[]> {
+      return this._HTTP.get<Book[]>(this.baseUrl + 'GetBooks').pipe(
           catchError(this.handleError)
         );
     }
 
     GetBookById(id: number): Observable<Book> {
-        return this._HTTP.post<Book>(this.baseUrl + 'GetBookById', id);
+        return this._HTTP.post<Book>(this.baseUrl + 'GetBookById', id).pipe(
+          catchError(this.handleError)
+        );
+      }
+
+    GetBookByFilter(value: FilterModel): Observable<Book[]> {
+      return this._HTTP.post<Book[]>(this.baseUrl + 'GetBookByFilter', value).pipe(
+        catchError(this.handleError)
+      );
     }
 
     AddBook(data: Book) {

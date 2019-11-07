@@ -4,6 +4,7 @@
         <mat-form-field>
             <input matInput type="text" formControlName="name" placeholder="Name" name="name" class="form-control" id="name">
             <mat-error *ngIf="hasError('name', 'required')">Name is required</mat-error>
+            <mat-error *ngIf="hasError('name', 'maxlength')">You have more than 60 characters</mat-error>
         </mat-form-field>
     
         <mat-form-field>
@@ -20,6 +21,7 @@
             <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="datePublished">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="hasError('datePublished', 'required')">Date published is required</mat-error>
         </mat-form-field>
 	
         <mat-card-actions align="center">

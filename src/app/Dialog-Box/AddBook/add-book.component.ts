@@ -18,8 +18,8 @@ export class AddBookComponent implements OnInit {
 
   ngOnInit() {
     this.bookForm = this.formBuilder.group({
-        name: ['', Validators.required],
-        datePublished: [new Date()],
+        name: ['', Validators.required, Validators.maxLength(60)],
+        datePublished: [new Date(), Validators.required],
         price: ['', Validators.required],
         author: ['', Validators.required]
     });

@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { AddBookComponent } from './Dialog-Box/AddBook/add-book.component';
 import { EditBookComponent } from './Dialog-Box/EditBook/edit-book.component';
 import { DeleteBookComponent } from './Dialog-Box/DeleteBook/delete-book.component';
+import { FilterModel } from './Modules/FilterModel';
 
 @Component({
   selector: 'app-root',
@@ -25,8 +26,8 @@ export class AppComponent {
   }
 
   GetBooks() {
-    this._bookService.GetBook().subscribe(devices => {
-      this.books  = new MatTableDataSource<Book>(devices);
+    this._bookService.GetBooks().subscribe(books => {
+      this.books = books;
       });
   }
 
@@ -62,6 +63,11 @@ export class AppComponent {
   }
 
   public doFilter = (value: string) => {
-    this.books.filter = value.trim().toLocaleLowerCase();
+    if (value != '') {
+      const data: FilterModel = {key: value };
+      this._bookService.GetBookByFilter(data).subscribe(books => {
+        this.books = new MatTableDataSource<Book>(books);
+        });
+    }
   }
 }
