@@ -22,6 +22,12 @@ import { FilterModel } from '../Modules/FilterModel';
         );
     }
 
+    FilterBooks(filter: FilterModel): Observable<Book[]> {
+      return this._HTTP.post<Book[]>(this.baseUrl + 'FilterBooks', filter).pipe(
+          catchError(this.handleError)
+        );
+    }
+
     GetBookById(id: number): Observable<Book> {
         return this._HTTP.post<Book>(this.baseUrl + 'GetBookById', id).pipe(
           catchError(this.handleError)
